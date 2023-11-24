@@ -1,5 +1,6 @@
 package pe.veterinariasjb.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,6 +15,9 @@ public class Cargo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_cargo;
-    private String nombre_cargo;
+    @Column(name = "id_cargo")
+    private int idCargo;
+
+    @Column(name = "nombre_cargo")
+    private String nombre;
 }

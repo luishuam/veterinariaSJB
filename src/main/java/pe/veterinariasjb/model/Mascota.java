@@ -2,6 +2,7 @@ package pe.veterinariasjb.model;
 
 import java.math.BigDecimal;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,8 +11,10 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 
 @Entity
@@ -21,20 +24,36 @@ public class Mascota {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_mascota;
-    @NotNull
-    private String nombre_mascota;
-    @NotNull
+    @Column(name = "id_mascota")
+    private int idMascota;
+
+    @NotBlank
+    @Column(name = "nombre_mascota")
+    private String nombreMascota;
+
+    @NotBlank
     private String especie;
-    @NotNull
+
+    @NotBlank
     private String raza;
-    @Size(min = 0)
+
+    @Min(0)
+    @NotNull
     private Integer edad;
+
+    @PositiveOrZero
+    @NotNull
     @Digits(integer = 3, fraction = 2)
     private BigDecimal peso;
-    private int clientes_id;
+
+    @NotNull
+    @Column(name = "estado_mascota")
+    private Boolean estadoMascota;
+
+    // @Column(name = "clientes_id")
+    // private int clientesId;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "id_cliente", insertable = true, updatable = true)
-    public Cliente objCliente;
+    @JoinColumn(name = "clientes_id", insertable = true, updatable = true)
+    public Cliente idCliente;
 }

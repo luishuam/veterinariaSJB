@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>SJB</title>
+    <link
+      href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      rel="stylesheet"
+      id="bootstrap-css"
+    />
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+      integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Berkshire Swash"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <!--Inicio Barra de Navegacion-->
+    <style>
+      nav {
+        font-size: 15px;
+      }
+
+      #brand {
+        font-family: "Berkshire Swash";
+        font-size: 30px;
+      }
+    </style>
+    <div style="height: 70px; width: 100%"></div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top">
+      <div class="container">
+        <a class="navbar-brand logo-font" href="/inicio" id="brand">
+          San Juan Bautista
+        </a>
+        <!-- links toggle -->
+        <button
+          class="navbar-toggler order-first"
+          type="button"
+          data-toggle="collapse"
+          data-target="#links"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="fa fa-bars"></i>
+        </button>
+        <!-- account toggle -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#account"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="fa fa-sign-out fa-1x" aria-hidden="true"></i>
+        </button>
+
+        <div class="collapse navbar-collapse" id="links">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/inicio">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/citas">Citas</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdownMenuLink"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Pacientes
+              </a>
+              <div
+                class="dropdown-menu"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                <a class="dropdown-item" href="/pacientes/mascotas">Mascotas</a>
+                <a class="dropdown-item" href="/pacientes/dueños">Dueños</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/productos">Productos</a>
+            </li>
+          </ul>
+        </div>
+        <div class="collapse navbar-collapse" id="account">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Cerrar Sesion</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!--Fin Barra de Navegacion-->
+
+    <!--Inicio Contenido-->
+    <div class="container">
+      <div class="row">
+        <div class="col-6 col-sm-3">
+          <h1>Mantenimiento de Citas</h1>
+          <form action="/citas/guardar" method="post" th:object="${cita}">
+            <div class="form-group">
+              <label for="inputCod">Id</label>
+              <input
+                type="number"
+                class="form-control"
+                th:field="*{idCita}"
+                id="inputCod"
+                placeholder="Código"
+                readonly
+              />
+            </div>
+            <div class="form-group">
+              <label for="inputFecha">Fecha</label>
+              <input
+                type="text"
+                class="form-control"
+                th:field="*{fecha}"
+                id="inputFecha"
+                placeholder="2023-10-28"
+              />
+            </div>
+            <div class="form-group">
+              <label for="inputHora">Hora</label>
+              <input
+                type="text"
+                class="form-control"
+                th:field="*{hora}"
+                id="inputHora"
+                placeholder="00:00"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="inputDescripcion">Descripcion</label>
+              <textarea
+                type="text"
+                class="form-control"
+                placeholder="Escribir la descripcion"
+                id="inputDescripcion"
+                th:field="*{descripcion}"
+                style="height: 80px"
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <label for="inputEstado">Estado</label>
+              <select
+                id="inputEstado"
+                class="form-control"
+                th:field="*{estadoCita}"
+              >
+                <option th:value="null">Seleccione...</option>
+                <option th:value="true">Activo</option>
+                <option th:value="false">Eliminado</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="inputMascota">Mascota</label>
+                <select
+                  id="inputMascota"
+                  class="form-control"
+                  th:field="*{idMascota}"
+                >
+                  <option value="-1">Seleccione...</option>
+                  <option
+                    th:each="m : ${lstMascotas}"
+                    th:value="${m.idMascota}"
+                    th:text="${m.nombreMascota}"
+                  ></option>
+                </select>
+              </div>
+
+              <div class="form-group col-md-4">
+                <label for="inputCliente">Cliente</label>
+                <select
+                  id="inputCliente"
+                  class="form-control"
+                  th:field="*{idCliente}"
+                >
+                  <option value="-1">Seleccione...</option>
+                  <option
+                    th:each="c : ${lstClientes}"
+                    th:value="${c.idCliente}"
+                    th:text="${c.nombresCliente}"
+                  ></option>
+                </select>
+              </div>
+
+              <div class="form-group col-md-4">
+                <label for="inputServicio">Tipo</label>
+                <select
+                  id="inputServicio"
+                  class="form-control"
+                  th:field="*{idServicio}"
+                >
+                  <option value="-1">Seleccione...</option>
+                  <option
+                    th:each="s : ${lstServicios}"
+                    th:value="${s.idServicio}"
+                    th:text="${s.nombreServicio}"
+                  ></option>
+                </select>
+              </div>
+            </div>
+            <div class="text-center">
+              <div
+                th:text="${mensaje}"
+                th:class="${cssmensaje}"
+                role="alert"
+              ></div>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="/citas" class="btn btn-secondary">Limpiar</a>
+            <a href="/citas/reporte" class="btn btn-danger w-25" target="_blank"
+              >PDF</a
+            >
+          </form>
+          <div th:text="${mensaje}"></div>
+        </div>
+        <div class="col-6 col-sm-9">
+          <h3></h3>
+          <table class="table text-center table-striped">
+            <thead>
+              <tr class="table-success">
+                <th>Id</th>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Descripcion</th>
+                <th>Estado</th>
+                <th>Mascota</th>
+                <th>Cliente</th>
+                <th>Servicio</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="c : ${lstCitas}">
+                <td th:text="${c.idCita}"></td>
+                <td th:text="${c.fecha}"></td>
+                <td th:text="${c.hora}"></td>
+                <td th:text="${c.descripcion}"></td>
+                <td th:text="${c.estadoCita}"></td>
+                <td th:text="${c.idMascota.nombreMascota}"></td>
+                <td th:text="${c.idCliente.nombresCliente}"></td>
+                <td th:text="${c.idServicio.nombreServicio}"></td>
+                <td>
+                  <a
+                    th:href="@{/citas/editar/}+${c.idCita}"
+                    class="btn btn-info"
+                    >Editar</a
+                  >
+                </td>
+                <td>
+                  <a
+                    th:href="@{/citas/eliminar/}+${c.idCita}"
+                    class="btn btn-dark"
+                    onclick="return confirm('¿Está seguro de eliminar la cita?');"
+                    >Eliminar</a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!--Fin Contenido-->
+  </body>
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+    integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
+    crossorigin="anonymous"
+  ></script>
+</html>

@@ -1,10 +1,9 @@
 package pe.veterinariasjb.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -28,7 +27,7 @@ public class LoginController {
 			Model model) {
 		Usuario usu = repoUsu.findByUsuarioAndClave(usuario, clave);
 		if (usu != null) {
-			model.addAttribute("Mensaje", "Bivenido " + usu.getNombre_usuario());
+			model.addAttribute("Mensaje", "Bienvenido " + usu.getNombre_usuario());
 			return "index";
 		} else {
 			model.addAttribute("mensaje", "El usuario o la contraseña son incorrectos");

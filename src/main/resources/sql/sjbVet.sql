@@ -62,7 +62,8 @@ COLLATE=utf8mb4_0900_ai_ci;
 
 CREATE TABLE `citas` (
   `id_cita` int NOT NULL AUTO_INCREMENT,
-  `fecha_cita` datetime NOT NULL,
+  `fecha_cita` date NOT NULL,
+  `hora_cita` time NOT NULL,
   `descripcion_cita` varchar(200),
   `estado_cita` BIT(1) NOT NULL,
   `mascotas_id` int NOT NULL,
@@ -75,7 +76,7 @@ CREATE TABLE `citas` (
   CONSTRAINT `citas_FK` FOREIGN KEY (`mascotas_id`) REFERENCES `mascotas` (`id_mascota`),
   CONSTRAINT `citas_FK_1` FOREIGN KEY (`clientes_id`) REFERENCES `clientes` (`id_cliente`),
   CONSTRAINT `citas_FK_2` FOREIGN KEY (`servicios_tipo`) REFERENCES `servicios_tipo` (`id_servicio`),
-  CONSTRAINT `citas_check` CHECK ((`fecha_cita` > _utf8mb4'2020-01-01 00:00:00 '))
+  CONSTRAINT `citas_check` CHECK ((`fecha_cita` > _utf8mb4'2020-01-01'))
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 
@@ -177,12 +178,16 @@ VALUES(2, 'Servicio de aseo');
 
 
 INSERT INTO veterinariasjbdb.citas
-(id_cita, fecha_cita, descripcion_cita, estado_cita, mascotas_id, clientes_id, servicios_tipo)
-VALUES(1, '2023-11-11 10:00:00', 'Cita para consulta para un felino', 1, 1, 1, 1)
+(id_cita, fecha_cita, hora_cita, descripcion_cita, estado_cita, mascotas_id, clientes_id, servicios_tipo)
+VALUES(1, '2023-11-11','10:00', 'Cita para consulta para un perrito', 1, 1, 1, 1)
 ;
 INSERT INTO veterinariasjbdb.citas
-(id_cita, fecha_cita, descripcion_cita, estado_cita, mascotas_id, clientes_id, servicios_tipo)
-VALUES(2, '2023-11-11 12:00:00', 'Cita para servicio de aseo para perrito', 1, 2, 2, 2);
+(id_cita, fecha_cita, hora_cita, descripcion_cita, estado_cita, mascotas_id, clientes_id, servicios_tipo)
+VALUES(2, '2023-11-11','11:30', 'Cita para servicio de aseo para gatito', 1, 2, 2, 2);
+
+INSERT INTO veterinariasjbdb.citas
+(id_cita, fecha_cita, hora_cita, descripcion_cita, estado_cita, mascotas_id, clientes_id, servicios_tipo)
+VALUES(3, '2023-01-14','11:30', 'Cita para consulta de gatito', 1, 4, 2, 1);
 
 
 INSERT INTO veterinariasjbdb.cargos

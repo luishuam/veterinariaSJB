@@ -1,10 +1,13 @@
 package pe.veterinariasjb.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -15,11 +18,28 @@ import lombok.Data;
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_cliente;
-    @NotNull
-    private String nombres_cliente;
+    @Column(name = "id_cliente")
+    private int idCliente;
+
+    @NotBlank
+    @Column(name = "nombres_cliente")
+    private String nombresCliente;
+
     @Size(min = 9, max = 9)
-    private String telefono_cliente;
+    @NotBlank
+    @Column(name = "telefono_cliente")
+    private String telefonoCliente;
+
+    @NotBlank
+    @Email
+    @Column(name = "email_cliente")
+    private String email;
+
+    @NotBlank
+    @Column(name = "direcccion_cliente")
+    private String direccionCliente;
+
     @NotNull
-    private String direccion_cliente;
+    @Column(name = "estado_cliente")
+    private Boolean estadoCliente;
 }

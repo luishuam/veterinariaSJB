@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <link
+      href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      rel="stylesheet"
+      id="bootstrap-css"
+    />
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"
+      integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Berkshire Swash"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <!--Inicio Barra de Navegacion-->
+    <style>
+      nav {
+        font-size: 15px;
+      }
+
+      #brand {
+        font-family: "Berkshire Swash";
+        font-size: 30px;
+      }
+    </style>
+    <div style="height: 70px; width: 100%"></div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success fixed-top">
+      <div class="container">
+        <a class="navbar-brand logo-font" href="/inicio" id="brand">
+          San Juan Bautista
+        </a>
+        <!-- links toggle -->
+        <button
+          class="navbar-toggler order-first"
+          type="button"
+          data-toggle="collapse"
+          data-target="#links"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="fa fa-bars"></i>
+        </button>
+        <!-- account toggle -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#account"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <i class="fa fa-sign-out fa-1x" aria-hidden="true"></i>
+        </button>
+
+        <div class="collapse navbar-collapse" id="links">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/inicio">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/citas">Citas</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="navbarDropdownMenuLink"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                Pacientes
+              </a>
+              <div
+                class="dropdown-menu"
+                aria-labelledby="navbarDropdownMenuLink"
+              >
+                <a class="dropdown-item" href="/pacientes/mascotas">Mascotas</a>
+                <a class="dropdown-item" href="/pacientes/dueños">Dueños</a>
+              </div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/productos">Productos</a>
+            </li>
+          </ul>
+        </div>
+        <div class="collapse navbar-collapse" id="account">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="/login">Cerrar Sesion</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!--Fin Barra de Navegacion-->
+
+    <!--Inicio Contenido-->
+    <div class="container">
+      <div class="row">
+        <div class="col-6 col-sm-3">
+          <h1>Mantenimiento de Mascotas</h1>
+          <form
+            action="/pacientes/mascotas/guardar"
+            method="post"
+            th:object="${mascota}"
+          >
+            <div class="form-group">
+              <label for="inputCod">Id</label>
+              <input
+                type="number"
+                class="form-control"
+                th:field="*{idMascota}"
+                id="inputCod"
+                placeholder="Código"
+                readonly
+              />
+            </div>
+            <div class="form-group">
+              <label for="inputNombre">Nombre</label>
+              <input
+                type="text"
+                class="form-control"
+                th:field="*{nombreMascota}"
+                id="inputNombre"
+                placeholder="Nombre de su mascotita"
+              />
+            </div>
+            <div class="form-group">
+              <label for="inputEspecie">Especie</label>
+              <input
+                type="text"
+                class="form-control"
+                th:field="*{especie}"
+                id="inputEspecie"
+                placeholder="Especie animal"
+              />
+            </div>
+            <div class="form-group">
+              <label for="inputRaza">Raza</label>
+              <input
+                type="text"
+                class="form-control"
+                th:field="*{raza}"
+                id="inputRaza"
+                placeholder="raza de la mascota"
+              />
+            </div>
+            <div class="form-group">
+              <label for="inputEdad">Edad(meses)</label>
+              <input
+                type="text"
+                class="form-control"
+                th:field="*{edad}"
+                id="inputEdad"
+                placeholder="En meses"
+              />
+            </div>
+            <div class="form-group">
+              <label for="inputPeso">Peso(Kg)</label>
+              <input
+                type="text"
+                class="form-control"
+                th:field="*{peso}"
+                id="inputPeso"
+                placeholder="En kilogramos"
+              />
+            </div>
+            <div class="form-group">
+              <label for="inputEstado">Estado</label>
+              <select
+                id="inputEstado"
+                class="form-control"
+                th:field="*{estadoMascota}"
+              >
+                <option th:value="null">Seleccione...</option>
+                <option th:value="true">Activo</option>
+                <option th:value="false">Eliminado</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="inputCliente">Cliente</label>
+                <select
+                  id="inputCliente"
+                  class="form-control"
+                  th:field="*{idCliente}"
+                >
+                  <option value="-1">Seleccione...</option>
+                  <option
+                    th:each="c : ${lstClientes}"
+                    th:value="${c.idCliente}"
+                    th:text="${c.nombresCliente}"
+                  ></option>
+                </select>
+              </div>
+            </div>
+            <div class="text-center">
+              <div
+                th:text="${mensaje}"
+                th:class="${cssmensaje}"
+                role="alert"
+              ></div>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="/pacientes/mascotas" class="btn btn-secondary">Limpiar</a>
+          </form>
+          <div th:text="${mensaje}"></div>
+        </div>
+        <div class="col-6 col-sm-9">
+          <h3></h3>
+          <table class="table text-center table-striped">
+            <thead>
+              <tr class="table-success">
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Especie</th>
+                <th>Raza</th>
+                <th>Edad(meses)</th>
+                <th>Peso(Kg)</th>
+                <th>Estado</th>
+                <th>Cliente</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="m : ${lstMascotas}">
+                <td th:text="${m.idMascota}"></td>
+                <td th:text="${m.nombreMascota}"></td>
+                <td th:text="${m.especie}"></td>
+                <td th:text="${m.raza}"></td>
+                <td th:text="${m.edad}"></td>
+                <td th:text="${m.peso}"></td>
+                <td th:text="${m.estadoMascota}"></td>
+                <td th:text="${m.idCliente.nombresCliente}"></td>
+                <td>
+                  <a
+                    th:href="@{/pacientes/mascotas/editar/}+${m.idMascota}"
+                    class="btn btn-info"
+                    >Editar</a
+                  >
+                </td>
+                <td>
+                  <a
+                    th:href="@{/pacientes/mascotas/eliminar/}+${m.idMascota}"
+                    class="btn btn-dark"
+                    onclick="return confirm('¿Está seguro de eliminar la mascotita?');"
+                    >Eliminar</a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!--Fin Contenido-->
+  </body>
+</html>
+<script
+  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  crossorigin="anonymous"
+></script>
+<script
+  src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+  integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
+  crossorigin="anonymous"
+></script>

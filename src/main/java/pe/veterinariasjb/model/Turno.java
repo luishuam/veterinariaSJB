@@ -1,5 +1,6 @@
 package pe.veterinariasjb.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,6 +15,9 @@ public class Turno {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id_turno;
-    private String nombre_turno;
+    @Column(name = "id_turno")
+    private int idTurno;
+
+    @Column(name = "nombre_turno")
+    private String nombreTurno;
 }
