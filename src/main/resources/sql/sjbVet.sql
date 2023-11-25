@@ -254,4 +254,6 @@ INSERT INTO veterinariasjbdb.productos
 (id_producto, nombre_producto, descripcion_producto, precio_producto, stock, estado_producto)
 VALUES(NULL, 'Caja de Arena ', 'Caja de arena automática con sistema de autolimpieza. Ideal para mantener la higiene sin esfuerzo.', 85.0, 11, 1);
 
+
+
 #Fin
