@@ -24,18 +24,20 @@ public class Producto {
     @Column(name = "id_producto")
     private int idProducto;
 
-    @NotBlank
+    @NotBlank(message = "Ingrese un nombre")
     @Column(name = "nombre_producto")
     private String nombreProducto;
 
     @Column(name = "descripcion_producto")
     private String descripcionProducto;
 
+    @NotNull(message = "Ingrese un precio")
     @Digits(integer = 3, fraction = 2)
     @Column(name = "precio_producto")
     private BigDecimal precioProducto;
 
     @Min(0)
+    @NotNull(message = "Ingrese una cantidad")
     private int stock;
 
     @NotNull

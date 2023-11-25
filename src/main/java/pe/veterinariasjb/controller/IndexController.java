@@ -16,23 +16,4 @@ public class IndexController {
 		return "index";
 	}
 
-	// @GetMapping("/citas")
-	// public String cargarCitas(Model model) {
-	// return "citas";
-	// }
-
-	// @GetMapping("/pacientes/mascotas")
-	// public String cargarMascotas(Model model) {
-	// return "mascotas";
-	// }
-
-	@GetMapping("/pacientes/dueños")
-	public String cargarDueños(Model model) {
-		return "duenos";
-	}
-
-	@GetMapping("/productos")
-	public String cargarProductos(Model model) {
-		return "productos";
-	}
 }

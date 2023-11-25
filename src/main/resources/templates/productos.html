@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>SJB</title>
     <link
       href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       rel="stylesheet"
@@ -91,7 +93,7 @@
                 aria-labelledby="navbarDropdownMenuLink"
               >
                 <a class="dropdown-item" href="/pacientes/mascotas">Mascotas</a>
-                <a class="dropdown-item" href="/pacientes/dueños">Dueños</a>
+                <a class="dropdown-item" href="/pacientes/clientes">Dueños</a>
               </div>
             </li>
             <li class="nav-item">
@@ -102,7 +104,7 @@
         <div class="collapse navbar-collapse" id="account">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/login">Cerrar Sesion</a>
+              <a class="nav-link" href="/login">Cerrar Sesión</a>
             </li>
           </ul>
         </div>
@@ -111,25 +113,155 @@
     <!--Fin Barra de Navegacion-->
 
     <!--Inicio Contenido-->
-
-    <div>
-      <h1>Esto son los productos</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-6 col-sm-3">
+          <h1>Mantenimiento de Productos</h1>
+          <form
+            action="/productos/guardar"
+            method="post"
+            th:object="${producto}"
+          >
+            <div class="form-group">
+              <label for="inputCod">Id</label>
+              <input
+                type="number"
+                class="form-control"
+                th:field="*{idProducto}"
+                id="inputCod"
+                placeholder="Código"
+                readonly
+              />
+            </div>
+            <div class="form-group">
+              <label for="inputNombre">Nombre</label>
+              <input
+                type="text"
+                class="form-control"
+                th:field="*{nombreProducto}"
+                id="inputNombre"
+                placeholder="Nombre de producto"
+              />
+            </div>
+            <div class="form-group">
+              <label for="inputDescripcion">Descripción</label>
+              <textarea
+                type="text"
+                class="form-control"
+                placeholder="Escribir la descripcion"
+                id="inputDescripcion"
+                th:field="*{descripcionProducto}"
+                style="height: 80px"
+              ></textarea>
+            </div>
+            <div class="form-group">
+              <label for="inputPrecio">Precio</label>
+              <input
+                type="number"
+                class="form-control"
+                th:field="*{precioProducto}"
+                id="inputPrecio"
+                step="0.1"
+                placeholder="Ingresar precio 00.00"
+              />
+            </div>
+            <div class="form-group">
+              <label for="inputStock">Stock</label>
+              <input
+                type="number"
+                class="form-control"
+                th:field="*{stock}"
+                id="inputStock"
+                step="1"
+                placeholder="Ingresar cantidad"
+              />
+            </div>
+            <div class="form-group">
+              <label for="inputEstado">Estado</label>
+              <select
+                id="inputEstado"
+                class="form-control"
+                th:field="*{estadoProducto}"
+              >
+                <option th:value="null">Seleccione...</option>
+                <option th:value="true">Activo</option>
+                <option th:value="false">Eliminado</option>
+              </select>
+            </div>
+            <div class="text-center">
+              <div
+                th:text="${mensaje}"
+                th:class="${cssmensaje}"
+                role="alert"
+              ></div>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="/productos" class="btn btn-secondary">Limpiar</a>
+            <a href="/productos/reporte" class="btn btn-danger" target="_blank"
+              >Reporte</a
+            >
+          </form>
+          <div th:text="${mensaje}"></div>
+        </div>
+        <div class="col-6 col-sm-9">
+          <h3></h3>
+          <table class="table text-center table-striped">
+            <thead>
+              <tr class="table-primary">
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Precio(S/.)</th>
+                <th>Stock</th>
+                <th>Estado</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="p : ${lstProductos}">
+                <td th:text="${p.idProducto}"></td>
+                <td th:text="${p.nombreProducto}"></td>
+                <td th:text="${p.descripcionProducto}"></td>
+                <td th:text="${p.precioProducto}"></td>
+                <td th:text="${p.stock}"></td>
+                <td th:text="${p.estadoProducto}"></td>
+                <td>
+                  <a
+                    th:href="@{/productos/editar/}+${p.idProducto}"
+                    class="btn btn-outline-primary"
+                    >Editar</a
+                  >
+                </td>
+                <td>
+                  <a
+                    th:href="@{/productos/eliminar/}+${p.idProducto}"
+                    class="btn btn-dark"
+                    onclick="return confirm('¿Está seguro de eliminar el producto?');"
+                    >Eliminar</a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
     <!--Fin Contenido-->
   </body>
+  <script
+    src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"
+  ></script>
+  <script
+    src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
+    integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
+    crossorigin="anonymous"
+  ></script>
 </html>
-<script
-  src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-  integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-  crossorigin="anonymous"
-></script>
-<script
-  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-  integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-  crossorigin="anonymous"
-></script>
-<script
-  src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js"
-  integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
-  crossorigin="anonymous"
-></script>

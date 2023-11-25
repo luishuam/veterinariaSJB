@@ -91,7 +91,7 @@
                 aria-labelledby="navbarDropdownMenuLink"
               >
                 <a class="dropdown-item" href="/pacientes/mascotas">Mascotas</a>
-                <a class="dropdown-item" href="/pacientes/dueños">Dueños</a>
+                <a class="dropdown-item" href="/pacientes/clientes">Dueños</a>
               </div>
             </li>
             <li class="nav-item">
@@ -102,7 +102,7 @@
         <div class="collapse navbar-collapse" id="account">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/login">Cerrar Sesion</a>
+              <a class="nav-link" href="/login">Cerrar Sesión</a>
             </li>
           </ul>
         </div>
@@ -111,9 +111,134 @@
     <!--Fin Barra de Navegacion-->
 
     <!--Inicio Contenido-->
-
-    <div>
-      <h1>Esto son los Dueños</h1>
+    <div class="container">
+      <div class="row">
+        <div class="col-6 col-sm-3">
+          <h1>Mantenimiento de Dueños</h1>
+          <form
+            action="/pacientes/clientes/guardar"
+            method="post"
+            th:object="${cliente}"
+          >
+            <div class="form-group">
+              <label for="inputCod">Id</label>
+              <input
+                type="number"
+                class="form-control"
+                th:field="*{idCliente}"
+                id="inputCod"
+                placeholder="Código"
+                readonly
+              />
+            </div>
+            <div class="form-group">
+              <label for="inputNombre">Nombres</label>
+              <input
+                type="text"
+                class="form-control"
+                th:field="*{nombresCliente}"
+                id="inputNombre"
+                placeholder="Nombre del dueño"
+              />
+            </div>
+            <div class="form-group">
+              <label for="inputTelefono">Telefono</label>
+              <input
+                type="text"
+                pattern="^[0-9]{9}$"
+                class="form-control"
+                th:field="*{telefonoCliente}"
+                id="inputTelefono"
+                placeholder="numero de 9 digitos"
+              />
+            </div>
+            <div class="form-group">
+              <label for="inputMail">Email</label>
+              <input
+                type="text"
+                class="form-control"
+                th:field="*{email}"
+                id="inputMail"
+                placeholder="example@example.com"
+              />
+            </div>
+            <div class="form-group">
+              <label for="inputAddress">Dirección</label>
+              <input
+                type="text"
+                class="form-control"
+                th:field="*{direccionCliente}"
+                id="inputAddress"
+                placeholder="Avendida calle jiron ..."
+              />
+            </div>
+            <div class="form-group">
+              <label for="inputEstado">Estado</label>
+              <select
+                id="inputEstado"
+                class="form-control"
+                th:field="*{estadoCliente}"
+              >
+                <option th:value="null">Seleccione...</option>
+                <option th:value="true">Activo</option>
+                <option th:value="false">Eliminado</option>
+              </select>
+            </div>
+            <div class="text-center">
+              <div
+                th:text="${mensaje}"
+                th:class="${cssmensaje}"
+                role="alert"
+              ></div>
+            </div>
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <a href="/pacientes/clientes" class="btn btn-secondary">Limpiar</a>
+          </form>
+          <div th:text="${mensaje}"></div>
+        </div>
+        <div class="col-6 col-sm-9">
+          <h3></h3>
+          <table class="table text-center table-striped">
+            <thead>
+              <tr class="table-info">
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Telefono</th>
+                <th>Email</th>
+                <th>Dirección</th>
+                <th>Estado</th>
+                <th></th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="c : ${lstClientes}">
+                <td th:text="${c.idCliente}"></td>
+                <td th:text="${c.nombresCliente}"></td>
+                <td th:text="${c.telefonoCliente}"></td>
+                <td th:text="${c.email}"></td>
+                <td th:text="${c.direccionCliente}"></td>
+                <td th:text="${c.estadoCliente}"></td>
+                <td>
+                  <a
+                    th:href="@{/pacientes/clientes/editar/}+${c.idCliente}"
+                    class="btn btn-info"
+                    >Editar</a
+                  >
+                </td>
+                <td>
+                  <a
+                    th:href="@{/pacientes/clientes/eliminar/}+${c.idCliente}"
+                    class="btn btn-dark"
+                    onclick="return confirm('¿Está seguro de eliminar al cliente?');"
+                    >Eliminar</a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
     <!--Fin Contenido-->
   </body>

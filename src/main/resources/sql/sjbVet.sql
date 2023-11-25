@@ -65,10 +65,10 @@ CREATE TABLE `citas` (
   `fecha_cita` date NOT NULL,
   `hora_cita` time NOT NULL,
   `descripcion_cita` varchar(200),
-  `estado_cita` BIT(1) NOT NULL,
   `mascotas_id` int NOT NULL,
   `clientes_id` int NOT NULL,
   `servicios_tipo` int NOT NULL,
+ `estado_cita` BIT(1) NOT NULL,
   PRIMARY KEY (`id_cita`),
   KEY `citas_FK` (`mascotas_id`),
   KEY `citas_FK_1` (`clientes_id`),
@@ -140,20 +140,26 @@ INSERT INTO veterinariasjbdb.clientes
 VALUES(1, 'María Rodríguez', '987654321', 'maria.rodriguez@email.com', 'Calle Ficticia, Nº 123, Ciudad Los Palacios',1);
 INSERT INTO veterinariasjbdb.clientes
 (id_cliente, nombres_cliente, telefono_cliente, email_cliente, direcccion_cliente, estado_cliente)
-VALUES(2, ' Juan Pérez', ' 987654322', 'juan.perez@example.com', ': Avenida Ficticia, Nº 456, Ciudad Real',1);
+VALUES(2, ' Juan Pérez', '987654322', 'juan.perez@example.com', 'Avenida Ficticia, Nº 456, Ciudad Real',1);
+INSERT INTO veterinariasjbdb.clientes
+(id_cliente, nombres_cliente, telefono_cliente, email_cliente, direcccion_cliente, estado_cliente)
+VALUES(3, ' Xavier Salazar', '987456478', 'xavi123@gmail.com', 'Jiron los laureles, Nº 123, Ciudad Verde',1);
+INSERT INTO veterinariasjbdb.clientes
+(id_cliente, nombres_cliente, telefono_cliente, email_cliente, direcccion_cliente, estado_cliente)
+VALUES(4, 'Valentina Rojas', '956258147', 'vale.r12@gmail.com', 'Calle los ruisenores 123, Plaza Roja',1);
 
 INSERT INTO veterinariasjbdb.mascotas
 (id_mascota, nombre_mascota, especie, raza, edad, peso, estado_mascota, clientes_id)
 VALUES(1, 'Luna', 'Perro', 'Labrado Retriever', 36, 25.00,1, 2);
 INSERT INTO veterinariasjbdb.mascotas
 (id_mascota, nombre_mascota, especie, raza, edad, peso, estado_mascota, clientes_id)
-VALUES(2, 'Simba', 'Gato', 'Naranja', 24, 7.00,1, 1);
+VALUES(2, 'Simba', 'Gato', 'Naranja', 24, 7.00,1, 4);
 INSERT INTO veterinariasjbdb.mascotas
 (id_mascota, nombre_mascota, especie, raza, edad, peso, estado_mascota, clientes_id)
 VALUES(3, 'Rocky', 'Perro', 'Bulldog', 48, 12.20,1, 2);
 INSERT INTO veterinariasjbdb.mascotas
 (id_mascota, nombre_mascota, especie, raza, edad, peso, estado_mascota, clientes_id)
-VALUES(4, 'Pelusa', 'Gato', 'Persa', 60, 6.50,1, 2);
+VALUES(4, 'Pelusa', 'Gato', 'Persa', 60, 6.50,1, 3);
 INSERT INTO veterinariasjbdb.mascotas
 (id_mascota, nombre_mascota, especie, raza, edad, peso, estado_mascota, clientes_id)
 VALUES(5, 'Max', 'Perro', 'Golden retriever', 24, 30.00,1, 2);
@@ -162,10 +168,13 @@ INSERT INTO veterinariasjbdb.mascotas
 VALUES(6, 'Bella', 'Perro', 'Chihuahaha', 12, 3.00,1, 1);
 INSERT INTO veterinariasjbdb.mascotas
 (id_mascota, nombre_mascota, especie, raza, edad, peso, estado_mascota, clientes_id)
-VALUES(7, 'Simon', 'Conejo', 'Holandes', 60, 1.50,1, 1);
+VALUES(7, 'Simon', 'Conejo', 'Holandes', 60, 1.50,1, 3);
 INSERT INTO veterinariasjbdb.mascotas
 (id_mascota, nombre_mascota, especie, raza, edad, peso, estado_mascota, clientes_id)
 VALUES(8, 'Thor', 'Perro', 'Pastor aleman', 50, 35.00,1, 2);
+INSERT INTO veterinariasjbdb.mascotas
+(id_mascota, nombre_mascota, especie, raza, edad, peso, estado_mascota, clientes_id)
+VALUES(9, 'Lucas', 'Gato', 'Bombay', 49, 7.50,1, 4);
 
 
 INSERT INTO veterinariasjbdb.servicios_tipo
@@ -176,18 +185,17 @@ INSERT INTO veterinariasjbdb.servicios_tipo
 VALUES(2, 'Servicio de aseo');
 
 
-
 INSERT INTO veterinariasjbdb.citas
-(id_cita, fecha_cita, hora_cita, descripcion_cita, estado_cita, mascotas_id, clientes_id, servicios_tipo)
-VALUES(1, '2023-11-11','10:00', 'Cita para consulta para un perrito', 1, 1, 1, 1)
+(id_cita, fecha_cita, hora_cita, descripcion_cita, mascotas_id, clientes_id, servicios_tipo, estado_cita)
+VALUES(1, '2023-07-11','10:00', 'Cita para consulta para un perrito', 1, 2, 1, 0)
 ;
 INSERT INTO veterinariasjbdb.citas
-(id_cita, fecha_cita, hora_cita, descripcion_cita, estado_cita, mascotas_id, clientes_id, servicios_tipo)
-VALUES(2, '2023-11-11','11:30', 'Cita para servicio de aseo para gatito', 1, 2, 2, 2);
+(id_cita, fecha_cita, hora_cita, descripcion_cita, mascotas_id, clientes_id, servicios_tipo, estado_cita)
+VALUES(2, '2023-11-11','11:30', 'Cita para servicio de aseo para gatito', 2, 4, 2, 0);
 
 INSERT INTO veterinariasjbdb.citas
-(id_cita, fecha_cita, hora_cita, descripcion_cita, estado_cita, mascotas_id, clientes_id, servicios_tipo)
-VALUES(3, '2023-01-14','11:30', 'Cita para consulta de gatito', 1, 4, 2, 1);
+(id_cita, fecha_cita, hora_cita, descripcion_cita, mascotas_id, clientes_id, servicios_tipo, estado_cita)
+VALUES(3, '2023-12-20','13:30', 'consulta por fiebre de un gatito', 4, 3, 1, 1);
 
 
 INSERT INTO veterinariasjbdb.cargos

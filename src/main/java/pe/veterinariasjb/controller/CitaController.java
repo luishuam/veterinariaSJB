@@ -1,5 +1,11 @@
 package pe.veterinariasjb.controller;
 
+import java.io.OutputStream;
+import java.util.HashMap;
+
+import javax.sql.DataSource;
+
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,9 +14,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import net.sf.jasperreports.engine.JasperExportManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
 import pe.veterinariasjb.model.Cita;
+
 import pe.veterinariasjb.repository.CitaRepository;
 import pe.veterinariasjb.repository.ClienteRepository;
 import pe.veterinariasjb.repository.MascotaRepository;
@@ -49,7 +60,7 @@ public class CitaController {
 
         Cita cita = citaRepository.findById(idCita).get();
 
-        System.out.println(cita);
+        System.out.println(cita.getIdCita());
 
         model.addAttribute("cita", cita);
 
@@ -95,6 +106,38 @@ public class CitaController {
             return "redirect:/citas";
         } catch (Exception e) {
             return "redirect:/citas";
+        }
+    }
+
+    private DataSource dataSource; // javax.sql
+
+    private ResourceLoader resourceLoader; // core.io
+    // reportes filtrados por codigo
+
+    @GetMapping("/reporte/{idCita}")
+    public void reportesConFiltro(@PathVariable int idCita, HttpServletResponse response, @ModelAttribute Cita cita) {
+        // opcion para descargar directamente el PDF
+        // response.setHeader("Content-Disposition", "attachment;
+        // filename=\"reporte.pdf\";");
+        // Opcion para visaulizar el PDF
+        response.setHeader("Content-Disposition", "inline;");
+        //
+        response.setContentType("application/pdf");
+        try {
+            // Definir los parametros
+            System.out.println("llega " + cita);
+
+            HashMap<String, Object> parametros = new HashMap<>();
+            parametros.put("codigo", cita.getIdCita());
+
+            // Carga el jasper
+            String ru = resourceLoader.getResource("classpath:reports/boleta.jasper").getURI().getPath();
+            // Combinar el .jasper con la conexion
+            JasperPrint jasperPrint = JasperFillManager.fillReport(ru, parametros, dataSource.getConnection());
+            OutputStream outStream = response.getOutputStream();
+            JasperExportManager.exportReportToPdfStream(jasperPrint, outStream);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

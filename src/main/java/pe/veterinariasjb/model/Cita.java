@@ -29,7 +29,6 @@ public class Cita {
     private int idCita;
 
     @Column(name = "fecha_cita")
-    @PastOrPresent(message = "Tiempo pasado")
     @NotNull
     private LocalDate fecha;
 
@@ -40,10 +39,6 @@ public class Cita {
     @NotBlank(message = "Colocar descripcion")
     @Column(name = "descripcion_cita")
     private String descripcion;
-
-    @NotNull
-    @Column(name = "estado_cita")
-    private Boolean estadoCita;
 
     // @Column(name = "mascotas_id")
     // private int mascotasId;
@@ -65,5 +60,9 @@ public class Cita {
     @ManyToOne
     @JoinColumn(name = "servicios_tipo", insertable = true, updatable = true)
     public Servicio idServicio;
+
+    @NotNull
+    @Column(name = "estado_cita")
+    private Boolean estadoCita;
 
 }

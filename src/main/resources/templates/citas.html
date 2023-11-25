@@ -93,7 +93,7 @@
                 aria-labelledby="navbarDropdownMenuLink"
               >
                 <a class="dropdown-item" href="/pacientes/mascotas">Mascotas</a>
-                <a class="dropdown-item" href="/pacientes/dueños">Dueños</a>
+                <a class="dropdown-item" href="/pacientes/clientes">Dueños</a>
               </div>
             </li>
             <li class="nav-item">
@@ -104,7 +104,7 @@
         <div class="collapse navbar-collapse" id="account">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/login">Cerrar Sesion</a>
+              <a class="nav-link" href="/login">Cerrar Sesión</a>
             </li>
           </ul>
         </div>
@@ -142,7 +142,7 @@
             <div class="form-group">
               <label for="inputHora">Hora</label>
               <input
-                type="text"
+                type="time"
                 class="form-control"
                 th:field="*{hora}"
                 id="inputHora"
@@ -151,7 +151,7 @@
             </div>
 
             <div class="form-group">
-              <label for="inputDescripcion">Descripcion</label>
+              <label for="inputDescripcion">Descripción</label>
               <textarea
                 type="text"
                 class="form-control"
@@ -169,8 +169,8 @@
                 th:field="*{estadoCita}"
               >
                 <option th:value="null">Seleccione...</option>
-                <option th:value="true">Activo</option>
-                <option th:value="false">Eliminado</option>
+                <option th:value="true">Pendiente</option>
+                <option th:value="false">Completo</option>
               </select>
             </div>
             <div class="form-row">
@@ -231,9 +231,6 @@
             </div>
             <button type="submit" class="btn btn-primary">Guardar</button>
             <a href="/citas" class="btn btn-secondary">Limpiar</a>
-            <a href="/citas/reporte" class="btn btn-danger w-25" target="_blank"
-              >PDF</a
-            >
           </form>
           <div th:text="${mensaje}"></div>
         </div>
@@ -245,11 +242,12 @@
                 <th>Id</th>
                 <th>Fecha</th>
                 <th>Hora</th>
-                <th>Descripcion</th>
-                <th>Estado</th>
+                <th>Descripción</th>
                 <th>Mascota</th>
                 <th>Cliente</th>
                 <th>Servicio</th>
+                <th>Pendiente</th>
+                <th></th>
                 <th></th>
                 <th></th>
               </tr>
@@ -260,14 +258,14 @@
                 <td th:text="${c.fecha}"></td>
                 <td th:text="${c.hora}"></td>
                 <td th:text="${c.descripcion}"></td>
-                <td th:text="${c.estadoCita}"></td>
                 <td th:text="${c.idMascota.nombreMascota}"></td>
                 <td th:text="${c.idCliente.nombresCliente}"></td>
                 <td th:text="${c.idServicio.nombreServicio}"></td>
+                <td th:text="${c.estadoCita}"></td>
                 <td>
                   <a
                     th:href="@{/citas/editar/}+${c.idCita}"
-                    class="btn btn-info"
+                    class="btn btn-outline-success"
                     >Editar</a
                   >
                 </td>
@@ -277,6 +275,14 @@
                     class="btn btn-dark"
                     onclick="return confirm('¿Está seguro de eliminar la cita?');"
                     >Eliminar</a
+                  >
+                </td>
+                <td>
+                  <a
+                    th:href="@{/citas/reporte/}+${c.idCita}"
+                    class="btn btn-outline-danger"
+                    target="_blank"
+                    >PDF</a
                   >
                 </td>
               </tr>
